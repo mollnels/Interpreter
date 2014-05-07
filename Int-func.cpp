@@ -42,10 +42,10 @@ struct callexp {
 };
 
 struct letrecexp {
-	char p-name;
-	char b-var;
-	Expression* p-body;
-	Expression* letrec-body;
+	char pname;
+	char bvar;
+	Expression* pbody;
+	Expression* letrecbody;
 };
 
 class Expression {
@@ -58,7 +58,7 @@ class Expression {
 	letexp Let;
 	procexp Proc;
 	callexp Call;
-	lertrecexp Letrec;
+	letrecexp Letrec;
 
 	Expression(int num);
 	Expression(char var);
@@ -68,45 +68,46 @@ class Expression {
 	Expression(char var, Expression* exp1);
 	Expression(char name, char var, Expression* body, Expression* letbody);
 	Expression(Expression* exp1, Expression* exp2, char type);
+	Expression(Expression* exp1, Expression* exp2, bool call);
 };
 
-	Expression(int num){
+	Expression::Expression(int num){
 		Const.num = num;
 	}
 
-	Expression(char var){
+	Expression::Expression(char var){
 		Var.var = var;
 	}
 
-	Expression(Expression* exp1){
+	Expression::Expression(Expression* exp1){
 		Zero.exp1 = exp1;
 	}
 	
-	Expression(Expression* exp1, Expression* exp2, Expression* exp3){
+	Expression::Expression(Expression* exp1, Expression* exp2, Expression* exp3){
 		If.exp1 = exp1;
 		If.exp2 = exp2;
 		If.exp3 = exp3;
 	}
 	
-	Expression(char var, Expression* exp1, Expression* exp2){
+	Expression::Expression(char var, Expression* exp1, Expression* exp2){
 		Let.var = var;
 		Let.exp1 = exp1;
-		Let.exp2 = body;
+		Let.body = exp2;
 	}
 	
-	Expression(char var, Expression* exp1){
+	Expression::Expression(char var, Expression* exp1){
 		Proc.var = var;
 		Proc.body = exp1;
 	}
 	
-	Expression(char name, char var, Expression* body, Expression* letbody){
-		Letrec.p-name = name;
-		Letrec.b-var = var;
-		Letrec.p-body = body;
-		Letrec.letrec-body = letbody;
+	Expression::Expression(char name, char var, Expression* body, Expression* letbody){
+		Letrec.pname = name;
+		Letrec.bvar = var;
+		Letrec.pbody = body;
+		Letrec.letrecbody = letbody;
 	}
 	
-	Expression(Expression* exp1, Expression* exp2, bool call){
+	Expression::Expression(Expression* exp1, Expression* exp2, bool call){
 		if(call){
 			Call.rator = exp1;
 			Call.rand = exp2;
@@ -117,4 +118,6 @@ class Expression {
 		}
 	}
 
-
+int main(){
+	return 0;
+}
