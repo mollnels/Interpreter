@@ -51,6 +51,7 @@ struct letrecexp {
 class Expression {
 
 	constexp Const;
+	varexp Var;
 	diffexp Diff;
 	zeroexp Zero;
 	ifexp If;
@@ -68,4 +69,52 @@ class Expression {
 	Expression(char name, char var, Expression* body, Expression* letbody);
 	Expression(Expression* exp1, Expression* exp2, char type);
 };
+
+	Expression(int num){
+		Const.num = num;
+	}
+
+	Expression(char var){
+		Var.var = var;
+	}
+
+	Expression(Expression* exp1){
+		Zero.exp1 = exp1;
+	}
+	
+	Expression(Expression* exp1, Expression* exp2, Expression* exp3){
+		If.exp1 = exp1;
+		If.exp2 = exp2;
+		If.exp3 = exp3;
+	}
+	
+	Expression(char var, Expression* exp1, Expression* exp2){
+		Let.var = var;
+		Let.exp1 = exp1;
+		Let.exp2 = body;
+	}
+	
+	Expression(char var, Expression* exp1){
+		Proc.var = var;
+		Proc.body = exp1;
+	}
+	
+	Expression(char name, char var, Expression* body, Expression* letbody){
+		Letrec.p-name = name;
+		Letrec.b-var = var;
+		Letrec.p-body = body;
+		Letrec.letrec-body = letbody;
+	}
+	
+	Expression(Expression* exp1, Expression* exp2, bool call){
+		if(call){
+			Call.rator = exp1;
+			Call.rand = exp2;
+		}
+		else{
+			Diff.exp1 = exp1;
+			Diff.exp2 = exp2;
+		}
+	}
+
 
