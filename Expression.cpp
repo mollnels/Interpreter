@@ -1,10 +1,20 @@
+<<<<<<< HEAD:Int-func.cpp
 
 #include <string>
+=======
+>>>>>>> 7e0182abe17a5b2f0cb1067b09b2cd7982822954:Expression.cpp
 #include <iostream>
 using namespace std;
 
 class Expression;
 
+<<<<<<< HEAD:Int-func.cpp
+=======
+struct procval{
+	char var;
+	Expression* body;
+};
+>>>>>>> 7e0182abe17a5b2f0cb1067b09b2cd7982822954:Expression.cpp
 
 struct varexp {			//structure for the var-exp
 	char var;
@@ -53,13 +63,13 @@ struct callexp {
 	bool boo = false;
 };
 
-struct letrecexp {
-	char pname;
-	char bvar;
-	Expression* pbody;
-	Expression* letrecbody;
-	bool boo = false;
-};
+// struct letrecexp {
+// 	char pname;
+// 	char bvar;
+// 	Expression* pbody;
+// 	Expression* letrecbody;
+// 	bool boo = false;
+// };
 
 class Expression {
 public:
@@ -71,15 +81,20 @@ public:
 	letexp Let;
 	procexp Proc;
 	callexp Call;
+<<<<<<< HEAD:Int-func.cpp
 	letrecexp Letrec;
 public:
+=======
+	// letrecexp Letrec;
+
+>>>>>>> 7e0182abe17a5b2f0cb1067b09b2cd7982822954:Expression.cpp
 	Expression(int num);
 	Expression(char var);
 	Expression(Expression* exp1);
 	Expression(Expression* exp1, Expression* exp2, Expression* exp3);
 	Expression(char var, Expression* exp1, Expression* exp2);
 	Expression(char var, Expression* exp1);
-	Expression(char name, char var, Expression* body, Expression* letbody);
+	// Expression(char name, char var, Expression* body, Expression* letbody);
 	Expression(Expression* exp1, Expression* exp2, char type);
 	Expression(Expression* exp1, Expression* exp2, bool call);
 };
@@ -119,13 +134,13 @@ public:
 		Proc.boo = true;
 	}
 	
-	Expression::Expression(char name, char var, Expression* body, Expression* letbody){
-		Letrec.pname = name;
-		Letrec.bvar = var;
-		Letrec.pbody = body;
-		Letrec.letrecbody = letbody;
-		Letrec.boo = true;
-	}
+	// Expression::Expression(char name, char var, Expression* body, Expression* letbody){
+	// 	Letrec.pname = name;
+	// 	Letrec.bvar = var;
+	// 	Letrec.pbody = body;
+	// 	Letrec.letrecbody = letbody;
+	// 	Letrec.boo = true;
+	// }
 	
 	Expression::Expression(Expression* exp1, Expression* exp2, bool call){
 		if(call){
@@ -140,6 +155,7 @@ public:
 		}
 	}
 
+<<<<<<< HEAD:Int-func.cpp
 Expression * translate(string str) {
 	string v="(varexp ";
 	string c ("(constexp ");
@@ -298,3 +314,5 @@ int main() {
 	cout<< (*(*(*expr).Diff.exp1).Zero.exp1).Const.num<<'\n';
 	return 0; 
 }
+=======
+>>>>>>> 7e0182abe17a5b2f0cb1067b09b2cd7982822954:Expression.cpp
