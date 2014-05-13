@@ -1,44 +1,59 @@
-//uses int-func
+#include "expression.cpp"
 
-
-struct procval{
-	char var;
-	Expression* body;
-};
-
-template <class value>   //need to figure out how templates work
-
+template <class VALUE> 
 class Environment{
-	values = value*[100];
-	variables = char*[100];
+	VALUE* values[100];
+	char* variables[100];
 
-	Environment(value vals, char* vars);
+	Environment(VALUE* vals, char* vars);
 
-	Environmnet* extendenv(char var, value val, Environment* env);
-	Environment* extendenvrec(char var1, char var2, Expression* exp, Environment* env);
-	value applyenv(char var, Environment* env);	
+	Environment* extendenv(char var, VALUE val, Environment<VALUE>* env);
+	//Environment* extendenvrec(char var1, char var2, Expression* exp, Environment* env);
+	VALUE applyenv(char var, Environment* env);
+	bool varin(char var, Environment* env);
+	VALUE findvar(char var, Environment* env);	
 };
 
-Environment::Environment(value vals, char* vars){
+template <class VALUE> 
+Environment<VALUE>::Environment(VALUE* vals, char* vars){
 	values = vals;
 	variables = vars;
 }
-
-Environment* Environment::extendenv(char var, value val, Environment* env){
-	len = findlength(env.values);
-	env.values[len] = val;
-	env.variables[len] = var;
+template <class VALUE> 
+Environment<VALUE>* Environment<VALUE>::extendenv(char var, VALUE val, Environment* env){
+	int len = length(env->values);
+	env->values[len] = val;
+	env->variables[len] = var;
 	return env;
 }
 
-Environment* Environment::extendenvrec(char var1, char var2, Expression* exp, Environment* env){
+// Environment* Environment::extendenvrec(char var1, char var2, Expression* exp, Environment* env){
 
-	return env;
+// 	return env;
+// }
+
+template <class VALUE> 
+bool Environment<VALUE>::varin(char var, Environment* env){
+	for (int i = 0; i <= length(env->variables); ++i) {
+		if(env->variables[i] == var) return true;
+	}
+
+	return false;
 }
 
-value Environment::applyenv(char var, Environment* env){
+template <class VALUE> 
+VALUE Environment<VALUE>::findvar(char var, Environment* env){
+	for (int i = 0; i <= length(env->variables); ++i) {
+		if(env->variables[i] == var){
+			return env->values[i];
+		}
+	}	
+}
+
+template <class VALUE> 
+VALUE Environment<VALUE>::applyenv(char var, Environment* env){
 	if(varin(var, env)){
-		value val = findvar(var, env)
+		VALUE val = findvar(var, env);
 		return val;
 	}
 	else{
@@ -46,6 +61,8 @@ value Environment::applyenv(char var, Environment* env){
 	}
 	
 }
+
+
 
 //findlength function
 //varin function - returns true if variable is in environment

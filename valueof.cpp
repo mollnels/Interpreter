@@ -1,57 +1,66 @@
-//uses int-func and environment
+#include "environment.cpp"
 
-value valueof(Expression* exp, Environment* env){
-	if(Var.boo == true){
-		Var.boo = false;
-		value val = applyenv(Var.var, env);
+template <class VALUE> 
+VALUE applyprocedure(procval proc, VALUE arg, Environment<VALUE>* env){
+	valueof(proc.body, extendenv(proc.var, arg, env));
+}
+
+template <class VALUE> 
+VALUE valueof(Expression* exp, Environment<VALUE>* env){
+
+	if(exp->Var.boo == true){
+		exp->Var.boo = false;
+		VALUE val = applyenv(exp->Var.var, env);
 		return val;
 	}
 
-	elif(Const.boo == true){
-		Const.boo = false;
-		return Const.num;
+	else if(exp->Const.boo == true){
+		exp->Const.boo = false;
+		return exp->Const.num;
 	}
 
-	elif(If.boo == true){
-		If.boo = false;
-		val1 = valeueof(If.exp1, env);
+	else if(exp->If.boo == true){
+		exp->If.boo = false;
+		VALUE val1 = valeueof(exp->If.exp1, env);
 		if(val1){
-			valueof(If.exp2, env);
+			valueof(exp->If.exp2, env);
 		}
 		else{
-			valueof(If.exp3, env);
+			valueof(exp->If.exp3, env);
 		}
 	}
 
-	elif(Let.boo == true){
-		Let.boo = false;
-		val1 = valueof(Let.exp1, env);
-		valueof(Let.body, extendenv(Let.var, val1, env));
+	else if(exp->Let.boo == true){
+		exp->Let.boo = false;
+		VALUE val1 = valueof(exp->Let.exp1, env);
+		valueof(exp->Let.body, extendenv(exp->Let.var, val1, env));
 	}
 
-	elif(Diff.boo == true){
-		Diff.boo = false;
-		val1 = valueof(Diff.exp1, env);
-		val2 = valueof(Diff.exp2, env);
+	else if(exp->Diff.boo == true){
+		exp->Diff.boo = false;
+		VALUE val1 = valueof(exp->Diff.exp1, env);
+		VALUE val2 = valueof(exp->Diff.exp2, env);
 		return val1-val2;
 	}
 
-	elif(Call.boo == true){
-		Call.boo = false;
-		proc = valueof(Call.rator, env);
-		arg = valueof(Call.rand, env);
-		applyprocedure(proc, arg);
+	else if(exp->Call.boo == true){
+		exp->Call.boo = false;
+		VALUE proc = valueof(exp->Call.rator, env);
+		VALUE arg = valueof(exp->Call.rand, env);
+		applyprocedure(proc, arg, env);
 	}
 
-	elif(Proc.boo == true){
-		Proc.boo = false;
-		//make procval struct?
-		return proc;
+	else if(exp->Proc.boo == true){
+		exp->Proc.boo = false;
+		procval pv;
+		pv.var = exp->Proc.var;
+		pv.body = exp->Proc.body;
+		return pv;
 	}
 
-	elif(Zero.boo == true){
-		Zero.boo = false;
-		val1 = valueof(Zero.exp1, env);
+	else if(exp->Zero.boo == true){
+		exp->Zero.boo = false;
+		VALUE val1 = valueof(exp->Zero.exp1, env);
 		if(val1){
 			return true;
 		}
@@ -60,24 +69,17 @@ value valueof(Expression* exp, Environment* env){
 		}
 	}
 
-	elif(Letrec.boo == true){
-		Letrec.boo = false;
-		valueof(Letrec.pbody, extendenvrec(Letrec.pname, Letrec.bvar, Letrec.pbody, env));
-	}
+	// elif(Letrec.boo == true){
+	// 	Letrec.boo = false;
+	// 	valueof(Letrec.pbody, extendenvrec(Letrec.pname, Letrec.bvar, Letrec.pbody, env));
+	// }
 
 	else{
 		cout << "ERROR. Expression not defined." << endl;
 	}
 }
 
-
-
-/*things we need to make:
-	Environment class
-	applyenv function - method?
-	extendenv(CHAR, VAL, ENVIRONMENT) - method?
-	extendenvrec(CHAR, CHAR, EXPRESSION, ENVIRONMENT)
-	applyprocedure(PROCVAL, VAL)
-	procedure(CHAR, EXPRESSION, ENVIRONMENT)
-	procval?
+int main(){
+	cout << "hello" << endl;
+}
 
