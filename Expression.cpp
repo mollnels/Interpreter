@@ -16,6 +16,27 @@ struct procval{
 };
 >>>>>>> 7e0182abe17a5b2f0cb1067b09b2cd7982822954:Expression.cpp
 
+
+
+struct letlang{
+	char val;
+};
+
+struct NUMVAL : letlang{
+	int val;
+};
+
+struct PROCVAL : letlang{
+	procval val;
+};
+
+struct BOOLVAL : letlang{
+	bool val;
+};
+
+
+
+
 struct varexp {			//structure for the var-exp
 	char var;
 	bool boo = false;
@@ -73,6 +94,13 @@ struct callexp {
 
 class Expression {
 public:
+
+	letlang let;
+	NUMVAL NUM;
+	BOOLVAL BOOL;
+	PROCVAL PROC;
+
+
 	constexp Const;
 	varexp Var;
 	diffexp Diff;
